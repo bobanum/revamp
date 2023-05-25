@@ -1,6 +1,7 @@
 {
     "name": "bobanum/revamp",
     "version": "0.1.0",
+    "type": "library",
     "description": "Laravel utility to regroup and reorganize your routes, controllers, models, views... into concepts",
     "keywords": [
         "laravel",
@@ -18,7 +19,9 @@
         }
     ],
     "require": {
-        "php": "^8.1"
+        "php": "^8.1.0",
+        "illuminate/support": "^8.0 || ^9.0",
+        "laravel/framework": "^8.0 || ^9.0"
     },
     "autoload": {
         "psr-4": {
@@ -35,7 +38,7 @@
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {}
 }
