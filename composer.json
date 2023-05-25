@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "illuminate/console": "^8.0|^9.0|^10.0",
         "laravel/framework": "^10.10"
     },
     "autoload": {
@@ -16,6 +17,13 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bobanum\\Revamp\\RevampServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev",
