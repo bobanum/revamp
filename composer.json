@@ -1,45 +1,101 @@
 {
     "name": "bobanum/revamp",
+    "description": "Guzzle is a PHP HTTP client library",
+    "keywords": [
+        "framework",
+        "http",
+        "rest",
+        "web service",
+        "curl",
+        "client",
+        "HTTP client",
+        "PSR-7",
+        "PSR-18"
+    ],
     "license": "MIT",
-    "description": "php error handling for cool kids",
-    "keywords": ["library", "error", "handling", "exception", "revamp", "throwable"],
-    "homepage": "https://bobanum.github.io/revamp/",
     "authors": [
         {
-            "name": "Martin Boudreau",
-            "homepage": "https://github.com/bobanum",
-            "role": "Developer"
+            "name": "Graham Campbell",
+            "email": "hello@gjcampbell.co.uk",
+            "homepage": "https://github.com/GrahamCampbell"
+        },
+        {
+            "name": "Michael Dowling",
+            "email": "mtdowling@gmail.com",
+            "homepage": "https://github.com/mtdowling"
+        },
+        {
+            "name": "Jeremy Lindblom",
+            "email": "jeremeamia@gmail.com",
+            "homepage": "https://github.com/jeremeamia"
+        },
+        {
+            "name": "George Mponos",
+            "email": "gmponos@gmail.com",
+            "homepage": "https://github.com/gmponos"
+        },
+        {
+            "name": "Tobias Nyholm",
+            "email": "tobias.nyholm@gmail.com",
+            "homepage": "https://github.com/Nyholm"
+        },
+        {
+            "name": "Márk Sági-Kazár",
+            "email": "mark.sagikazar@gmail.com",
+            "homepage": "https://github.com/sagikazarmark"
+        },
+        {
+            "name": "Tobias Schultze",
+            "email": "webmaster@tubo-world.de",
+            "homepage": "https://github.com/Tobion"
         }
     ],
-    "scripts": {
-        "test": "phpunit --testdox tests"
-    },
     "require": {
-        "php": "^5.5.9 || ^7.0 || ^8.0",
-        "psr/log": "^1.0.1 || ^2.0 || ^3.0"
+        "php": "^7.2.5 || ^8.0",
+        "ext-json": "*",
+        "psr/http-client": "^1.0",
+        "symfony/deprecation-contracts": "^2.2 || ^3.0"
+    },
+    "provide": {
+        "psr/http-client-implementation": "1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8.36 || ^5.7.27 || ^6.5.14 || ^7.5.20 || ^8.5.8 || ^9.3.3",
-        "mockery/mockery": "^0.9 || ^1.0",
-        "symfony/var-dumper": "^2.6 || ^3.0 || ^4.0 || ^5.0"
+        "ext-curl": "*",
+        "bamarni/composer-bin-plugin": "^1.8.1",
+        "php-http/client-integration-tests": "dev-master#2c025848417c1135031fdf9c728ee53d0a7ceaee as 3.0.999",
+        "php-http/message-factory": "^1.1",
+        "phpunit/phpunit": "^8.5.29 || ^9.5.23",
+        "psr/log": "^1.1 || ^2.0 || ^3.0"
     },
     "suggest": {
-        "symfony/var-dumper": "Pretty print complex values better with var-dumper available",
-        "whoops/soap": "Formats errors as SOAP responses"
+        "ext-curl": "Required for CURL handler support",
+        "ext-intl": "Required for Internationalized Domain Name (IDN) support",
+        "psr/log": "Required for using the Log middleware"
+    },
+    "config": {
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        },
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": false
+        }
     },
     "autoload": {
         "psr-4": {
             "Revamp\\": "src/"
-        }
+        },
+        "files": [
+            "src/functions_include.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
-            "Revamp\\": "tests/Revamp/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.7-dev"
+            "Revamp\\Tests\\": "tests/"
         }
     }
 }
