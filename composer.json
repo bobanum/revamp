@@ -1,6 +1,5 @@
 {
     "name": "bobanum/revamp",
-    "version": "0.1.0",
     "description": "Laravel utility to regroup and reorganize your routes, controllers, models, views... into concepts",
     "keywords": [
         "laravel",
