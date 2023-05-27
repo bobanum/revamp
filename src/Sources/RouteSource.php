@@ -29,6 +29,8 @@ class RouteSource extends Source {
         if (file_exists($path)) {
             $this->info('Revamping Routes:');
             $this->linkFileIfNeeded($path, $link);
+        } else {
+            $this->warn('No separate routes file found', '-vv');
         }
     }
 }

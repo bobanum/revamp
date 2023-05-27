@@ -22,6 +22,8 @@ class SeederSource extends Source {
         if (file_exists($path)) {
             $this->info('Revamping Seeder:');
             $this->linkFileIfNeeded($path, $link);
+        } else {
+            $this->warn('No seeder found', '-vv');
         }
     }
 }

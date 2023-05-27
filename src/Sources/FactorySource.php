@@ -22,6 +22,8 @@ class FactorySource extends Source {
         if (file_exists($path)) {
             $this->info('Revamping Factory:');
             $this->linkFileIfNeeded($path, $link);
+        } else {
+            $this->warn('No factory found', '-vv');
         }
     }
 }

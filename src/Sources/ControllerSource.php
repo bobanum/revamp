@@ -37,6 +37,8 @@ class ControllerSource extends Source {
         if (file_exists($path)) {
             $this->info('Revamping Controller:');
             $this->linkFileIfNeeded($path, $link);
+        } else {
+            $this->warn('No controller found', '-vv');
         }
     }
 }

@@ -36,6 +36,8 @@ class ModelSource extends Source {
         if (file_exists($path)) {
             $this->info('Revamping Model:');
             $this->linkFileIfNeeded($path, $link);
+        } else {
+            $this->warn('No controller found', '-vv');
         }
     }
 }

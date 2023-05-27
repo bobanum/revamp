@@ -26,6 +26,8 @@ class ViewSource extends Source {
         if (file_exists($path)) {
             $this->info('Revamping Views: ' . $path);
             $this->linkDirIfNeeded($path, $link);
+        } else {
+            $this->warn('No views folder found', '-vv');
         }
     }
 }

@@ -20,6 +20,8 @@ class PolicySource extends Source {
         if (file_exists($path)) {
             $this->info('Revamping Policy:');
             $this->linkFileIfNeeded($path, $link);
+        } else {
+            $this->warn('No policy found', '-vv');
         }
     }
 }

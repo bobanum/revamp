@@ -27,6 +27,8 @@ class RequestSource extends Source {
                 $link = $this->concept->path($this->revamp_name($prefix));
                 $this->linkFileIfNeeded($path, $link);
             }
+        } else {
+            $this->warn('No request found', '-vv');
         }
     }
 }

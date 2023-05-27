@@ -3,8 +3,11 @@
 namespace Bobanum\Revamp\Console;
 
 use Illuminate\Support\Str;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
+use Symfony\Component\Process\Process;
 
-class RevampRefreshCommand extends RevampCommand {
+class RevampExtraCommand extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -28,9 +31,13 @@ class RevampRefreshCommand extends RevampCommand {
      * @return int|null
      */
     public function handle() {
-        Artisan::call('composer update');
-        $db = str_replace('\\','/',glob(database_path('*.{sqlite,db}'))[0]);
-        file_put_contents(base_path('.env', <<<EOT
+        $process = new Process(['composer', 'install']);
+    $process->run();
+        // Artisan::call('composer update');
+        $dbs = glob(database_path('*.{sqlite,db}'), GLOB_BRACE);
+        $db = str_replace('\\','/',$dbs[0]);
+        file_put_contents(base_path('.env'), 
+        <<<EOT
 APP_NAME=Laravel
 APP_ENV=local
 APP_KEY=base64:GwJEAEl+JjietYAvbHsDEdNLYYL7WTOvHnVZUIlW2Ig=
@@ -85,7 +92,7 @@ MIX_PUSHER_APP_KEY="\${PUSHER_APP_KEY}"
 MIX_PUSHER_APP_CLUSTER="\${PUSHER_APP_CLUSTER}"
 
 EOT
-    ));
+    );
         return 1;
     }
 }
