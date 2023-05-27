@@ -6,15 +6,13 @@ use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Bobanum\Revamp\Console\RevampCommand;
 
-class RevampServiceProvider extends ServiceProvider implements DeferrableProvider
-{
+class RevampServiceProvider extends ServiceProvider implements DeferrableProvider {
     /**
      * Register any application services.
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
         //
     }
 
@@ -23,12 +21,9 @@ class RevampServiceProvider extends ServiceProvider implements DeferrableProvide
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         if ($this->app->runningInConsole()) {
-            $this->commands([
-                RevampCommand::class,
-            ]);
+            $this->commands($this->provides());
         }
         return;
     }
@@ -38,8 +33,11 @@ class RevampServiceProvider extends ServiceProvider implements DeferrableProvide
      *
      * @return array
      */
-    public function provides()
-    {
-        return [Console\RunCommand::class];
+    public function provides() {
+        return [
+            Console\RevampCommand::class,
+            Console\RevampBackCommand::class,
+            Console\RevampRefreshCommand::class,
+        ];
     }
 }
