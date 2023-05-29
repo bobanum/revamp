@@ -40,5 +40,6 @@ class ControllerSource extends Source {
         } else {
             $this->warn('No controller found', '-vv');
         }
+        $this->revampSubfolders($path, $link);
     }
 }
