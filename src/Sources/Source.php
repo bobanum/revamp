@@ -3,6 +3,7 @@ namespace Bobanum\Revamp\Sources;
 
 abstract class Source {
     use \Illuminate\Console\Concerns\InteractsWithIO;
+    use \Bobanum\Revamp\FilesTrait;
     static $keepOriginalNames = false;
     public $concept;
 
@@ -23,4 +24,12 @@ abstract class Source {
         return static::source_file_path($this->concept->name);
     }
     abstract public function revamp();
+    public function revampSubfolders($path, $link) {
+        $pattern = dirname($path).'/*/'.basename($path);
+        $files = glob($pattern);
+        foreach ($files as $file) {
+            $sublink = str_replace('.php', '_'.basename(dirname($file)).'.php', $link);
+            $this->linkFileIfNeeded($file, $sublink);
+        }
+    }
 }
