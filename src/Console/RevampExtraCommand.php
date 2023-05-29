@@ -7,7 +7,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Process\Process;
 
-class RevampExtraCommand extends Command {
+class RevampExtraCommand extends Command
+{
     /**
      * The name and signature of the console command.
      *
@@ -30,14 +31,36 @@ class RevampExtraCommand extends Command {
      *
      * @return int|null
      */
-    public function handle() {
-        $process = new Process(['composer', 'install']);
-    $process->run();
+    public function handle()
+    {
+        // $process = new Process(['composer', 'install']);
+        // $process->run();
         // Artisan::call('composer update');
+        $this->changeEnv();
+        $this->addGodMode();
+    }
+    public function changeEnv()
+    {
         $dbs = glob(database_path('*.{sqlite,db}'), GLOB_BRACE);
-        $db = str_replace('\\','/',$dbs[0]);
-        file_put_contents(base_path('.env'), 
-        <<<EOT
+        if (count($dbs) == 0) {
+            $this->error("No database found in " . database_path());
+            return $this;
+        }
+        if (count($dbs) > 1) {
+            $choices = array_reduce($dbs, function ($carry, $db) {
+                $carry[basename($db)] = $db;
+                return $carry;
+            }, []);
+            $db = $this->choice("Which database to use?", array_keys($choices), 0);
+            $db = $choices[$db];
+        } else {
+            $db = $dbs[0];
+        }
+        $db = str_replace('\\', '/', $db);
+        $this->info("Changing '.env'; Database: " . basename($db));
+        file_put_contents(
+            base_path('.env'),
+            <<<EOT
 APP_NAME=Laravel
 APP_ENV=local
 APP_KEY=base64:GwJEAEl+JjietYAvbHsDEdNLYYL7WTOvHnVZUIlW2Ig=
@@ -92,7 +115,25 @@ MIX_PUSHER_APP_KEY="\${PUSHER_APP_KEY}"
 MIX_PUSHER_APP_CLUSTER="\${PUSHER_APP_CLUSTER}"
 
 EOT
-    );
-        return 1;
+        );
+        return $this;
+    }
+    public function addGodMode()
+    {
+        $this->info("Adding God mode");
+        file_put_contents(
+            base_path('routes/web.php'),
+            <<<EOT
+
+// God mode added by Revamp
+Route::get('/god', function () {
+    \$user = \App\Models\User::first();
+    \Illuminate\Support\Facades\Auth::loginUsingId(\$user->id);
+    return redirect()->to('/');
+});
+EOT,
+            FILE_APPEND
+        );
+        return $this;
     }
 }
