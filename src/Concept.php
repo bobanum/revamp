@@ -9,7 +9,6 @@ class Concept {
     use \Bobanum\Revamp\FilesTrait;
     public $name;
     public $command;
-    public $keepOriginalNames = false;
     static public $sources = [
         Sources\ModelSource::class,
         Sources\ControllerSource::class,
@@ -20,6 +19,7 @@ class Concept {
         Sources\RequestSource::class,
         Sources\ViewSource::class,
         Sources\RouteSource::class,
+        Sources\VueModelSource::class,
     ];
 
     public function __construct($name, $command) {
@@ -46,7 +46,7 @@ class Concept {
     }
 
     public function revamp() {
-        $this->info('===> Revamping: ' . $this->name);
+        $this->info('===> Revamping Concept: ' . $this->name, 'vv');
         $this->makDirIfNotExist($this->revamp_path($this->name));
         foreach (self::$sources as $source) {
             (new $source($this))->revamp();

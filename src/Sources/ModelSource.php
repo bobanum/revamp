@@ -20,10 +20,10 @@ class ModelSource extends Source {
     }
 
     public function revamp_name() {
-        if (self::$keepOriginalNames) {
-            return $this->concept->name . '.php';
+        if (config('revamp.shorten_names', true)) {
+            return "Model.php";
         }
-        return "Model.php";
+        return $this->concept->name . '.php';
     }
     static public function source_file_path($pattern) {
         $path = app_path('Models/' . $pattern . '.php');
@@ -34,10 +34,10 @@ class ModelSource extends Source {
 
         $link = $this->link_path();
         if (file_exists($path)) {
-            $this->info('Revamping Model:');
+            $this->info('Revamping Model', 'vv');
             $this->linkFileIfNeeded($path, $link);
         } else {
-            $this->warn('No controller found', '-vv');
+            $this->warn('No model found', 'vvv');
         }
     }
 }

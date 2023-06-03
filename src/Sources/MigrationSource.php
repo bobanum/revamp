@@ -18,21 +18,21 @@ class MigrationSource extends Source
     }
     public function revamp_name()
     {
-        if (self::$keepOriginalNames) {
-            return "migration.php"; // TODO: make it work with the original name
-            // return date('Y_m_d_His') . '_create_' . Str::plural(Str::snake($this->name)) . '_table.php';
+        if (config('revamp.shorten_names', true)) {
+            return "migration.php";
         }
-        return "migration.php";
+        return "migration.php"; // TODO: make it work with the original name
+        // return date('Y_m_d_His') . '_create_' . Str::plural(Str::snake($this->name)) . '_table.php';
     }
     public function revamp()
     {
         $path = $this->source_path();
         $link = $this->link_path();
         if (file_exists($path)) {
-            $this->info('Revamping Migration:');
+            $this->info('Revamping Migration', 'vv');
             $this->linkFileIfNeeded($path, $link);
         } else {
-            $this->warn('No migration found', '-vv');
+            $this->warn('No migration found', 'vvv');
         }
     }
 }

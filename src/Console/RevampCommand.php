@@ -63,7 +63,6 @@ class RevampCommand extends Command {
             '▙','▄','▄','▟'
         ],
     ];
-    public $revampFolder = 'concepts';
     /**
      * The name and signature of the console command.
      *

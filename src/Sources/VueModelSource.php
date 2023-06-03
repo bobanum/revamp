@@ -2,28 +2,28 @@
 
 namespace Bobanum\Revamp\Sources;
 
-use Illuminate\Support\Str;
-
-class SeederSource extends Source {
+class VueModelSource extends Source {
     use \Bobanum\Revamp\FilesTrait;
 
-    static public function source_file_path($pattern) {
-        return database_path('seeders/' . $pattern . 'Seeder.php');
-    }
     public function revamp_name() {
         if (config('revamp.shorten_names', true)) {
-            return "Seeder.php";
+            return "VueModel.js";
         }
-        return $this->concept->name . 'Seeder.php';
+        return 'Vue'.$this->concept->name . '.js';
+    }
+    static public function source_file_path($pattern) {
+        $path = resource_path('js/models/' . $pattern . '.js');
+        return $path;
     }
     public function revamp() {
         $path = $this->source_path();
+
         $link = $this->link_path();
         if (file_exists($path)) {
-            $this->info('Revamping Seeder', 'vv');
+            $this->info('Revamping Vue Model','vv');
             $this->linkFileIfNeeded($path, $link);
         } else {
-            $this->warn('No seeder found', 'vvv');
+            $this->warn('No Vue model found','vvv');
         }
     }
 }

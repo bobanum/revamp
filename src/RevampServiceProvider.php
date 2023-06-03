@@ -25,6 +25,9 @@ class RevampServiceProvider extends ServiceProvider implements DeferrableProvide
         if ($this->app->runningInConsole()) {
             $this->commands($this->provides());
         }
+        $this->publishes([
+            __DIR__ . '/config.php' => config_path('revamp.php'),
+        ], 'config');
         return;
     }
 
@@ -39,6 +42,7 @@ class RevampServiceProvider extends ServiceProvider implements DeferrableProvide
             Console\RevampBackCommand::class,
             Console\RevampRefreshCommand::class,
             Console\RevampExtraCommand::class,
+            Console\RevampTestCommand::class,
         ];
     }
 }

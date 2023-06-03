@@ -15,19 +15,19 @@ class ViewSource extends Source {
         return $path;
     }
     public function revamp_name($prefix = '') {
-        if (self::$keepOriginalNames) {
-            return 'views_' . $this->concept->name;
+        if (config('revamp.shorten_names', true)) {
+            return "views";
         }
-        return "views";
+        return 'views_' . $this->concept->name;
     }
     public function revamp() {
         $path = $this->source_path();
         $link = $this->link_path();
         if (file_exists($path)) {
-            $this->info('Revamping Views: ' . $path);
+            $this->info('Revamping Views ' . $path, 'vv');
             $this->linkDirIfNeeded($path, $link);
         } else {
-            $this->warn('No views folder found', '-vv');
+            $this->warn('No views folder found', 'vvv');
         }
     }
 }

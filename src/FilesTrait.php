@@ -5,9 +5,8 @@ namespace Bobanum\Revamp;
 use Illuminate\Console\Command;
 
 trait FilesTrait {
-    public $revampFolder = 'concepts';
     public function revamp_path($path = "") {
-        $result = base_path($this->revampFolder);
+        $result = base_path(config('revamp.folder_name', 'concepts'));
         if ($path) {
             $result .= '/' . $path;
         }
@@ -16,7 +15,7 @@ trait FilesTrait {
     public function makDirIfNotExist($directory) {
         if (!is_dir($directory)) {
             mkdir($directory, 0755, true);
-            $this->info('Created Directory: ' . substr($directory, strlen(base_path()) + 1));
+            $this->info('Created Directory: ' . substr($directory, strlen(base_path()) + 1), 'v', 'vv');
         }
     }
     public function linkFileIfNeeded($source, $destination) {

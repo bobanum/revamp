@@ -25,20 +25,20 @@ class ControllerSource extends Source {
         return $path;
     }
     public function revamp_name($folder = null) {
-        if (self::$keepOriginalNames) {
-            return ($folder ? $folder . '_' : '') . $this->concept->name . 'Controller.php';
+        if (config('revamp.shorten_names', true)) {
+            return "Controller".($folder ? $folder : '').".php";
         }
-        return "Controller".($folder ? $folder : '').".php";
+        return ($folder ? $folder . '_' : '') . $this->concept->name . 'Controller.php';
     }
     public function revamp() {
         $path = $this->source_path();
 
         $link = $this->link_path();
         if (file_exists($path)) {
-            $this->info('Revamping Controller:');
+            $this->info('Revamping Controller', 'vv');
             $this->linkFileIfNeeded($path, $link);
         } else {
-            $this->warn('No controller found', '-vv');
+            $this->warn('No controller found', 'vvv');
         }
         $this->revampSubfolders($path, $link);
     }

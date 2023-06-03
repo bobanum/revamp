@@ -11,19 +11,19 @@ class FactorySource extends Source {
         return database_path('factories/' . $pattern . 'Factory.php');
     }
     public function revamp_name() {
-        if (self::$keepOriginalNames) {
-            return $this->concept->name . 'Factory.php';
+        if (config('revamp.shorten_names', true)) {
+            return "Factory.php";
         }
-        return "Factory.php";
+        return $this->concept->name . 'Factory.php';
     }
     public function revamp() {
         $path = $this->source_path();
         $link = $this->link_path();
         if (file_exists($path)) {
-            $this->info('Revamping Factory:');
+            $this->info('Revamping Factory', 'vv');
             $this->linkFileIfNeeded($path, $link);
         } else {
-            $this->warn('No factory found', '-vv');
+            $this->info('No factory found', 'vvv');
         }
     }
 }

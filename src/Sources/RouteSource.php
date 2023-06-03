@@ -16,10 +16,10 @@ class RouteSource extends Source {
         return $path;
     }
     public function revamp_name() {
-        if (self::$keepOriginalNames) {
-            return "routes_" . $this->concept->name . '.php';
+        if (config('revamp.shorten_names', true)) {
+            return "routes.php";
         }
-        return "routes.php";
+        return "routes_" . $this->concept->name . '.php';
     }
     public function revampRoutes() {
     }
@@ -27,10 +27,10 @@ class RouteSource extends Source {
         $path = $this->source_path();
         $link = $this->link_path();
         if (file_exists($path)) {
-            $this->info('Revamping Routes:');
+            $this->info('Revamping Routes', 'vv');
             $this->linkFileIfNeeded($path, $link);
         } else {
-            $this->warn('No separate routes file found', '-vv');
+            $this->warn('No separate routes file found', 'vvv');
         }
     }
 }
