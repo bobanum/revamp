@@ -37,15 +37,6 @@ class GlobalSource extends Source {
             'Controller.php' => ['Http/Controllers/Controller.php', 'app_path'],
             'Model.php' => ['Models/Model.php', 'app_path'],
         ];
-        $this->makDirIfNotExist($this->revamp_path());
-        foreach ($files as $destination => $source) {
-            if(is_array($source)) {
-                $source = call_user_func($source[1], $source[0]);
-            } else {
-                $source = base_path($source);
-            }
-            $destination = $this->revamp_path($destination);
-            $this->linkFileIfNeeded($source, $destination);
-        }
+        $this->revampFiles($files);
     }
 }

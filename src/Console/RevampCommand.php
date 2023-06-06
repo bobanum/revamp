@@ -5,6 +5,7 @@ namespace Bobanum\Revamp\Console;
 use Bobanum\Revamp\Concept;
 use Illuminate\Console\Command;
 use Bobanum\Revamp\Sources\GlobalSource;
+use Bobanum\Revamp\Sources\Source;
 
 class RevampCommand extends Command {
     use \Bobanum\Revamp\FilesTrait;
@@ -89,6 +90,10 @@ class RevampCommand extends Command {
         $this->revampGlobal();
         $concepts = $this->getConcepts();
         $this->revamp($concepts);
+        $files = config('revamp.custom_sources', []);
+        $source = new Source();
+        $source->revampFiles($files);
+        $this->header("Revamping finished!", 'blocks');
         return 1;
     }
     public function header($text, $decoration = 'double') {

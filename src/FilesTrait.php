@@ -43,7 +43,10 @@ trait FilesTrait {
         if (is_file($path)) {
             @unlink($path);
         } else {
-            array_map([self::class, __FUNCTION__], glob($path . '/*'));
+            $files = glob($path . '/*');
+            $files = array_merge($files, glob($path . '/.*'));
+            $files = array_diff($files, [$path . '/.', $path . '/..']);
+            array_map([self::class, __FUNCTION__], $files);
             @rmdir($path);
         }
     }
