@@ -14,10 +14,12 @@ trait FilesTrait {
         return $result;
     }
     public function makDirIfNotExist($directory) {
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
-            $this->info('Created Directory: ' . substr($directory, strlen(base_path()) + 1), 'v', 'vv');
+        if (is_dir($directory)) return;
+        if (!is_dir(dirname($directory))) {
+            $this->makDirIfNotExist(dirname($directory));
         }
+        mkdir($directory, 0755, true);
+        $this->info('Created Directory: ' . substr($directory, strlen(base_path()) + 1), 'v', 'vv');
     }
     public function linkFileIfNeeded($source, $destination) {
         if (!file_exists($source)) {
@@ -25,6 +27,7 @@ trait FilesTrait {
             return;
         }
         if (!file_exists($destination)) {
+            $this->makDirIfNotExist(dirname($destination));
             link($source, $destination);
             $this->info('Linked: ' . substr($destination, strlen(base_path()) + 1), 'vv');
         } else {
@@ -32,7 +35,8 @@ trait FilesTrait {
         }
     }
     public function linkDirIfNeeded($source, $destination) {
-        if (!file_exists($source)) {
+        if (!file_exists($destination)) {
+            $this->makDirIfNotExist(dirname($destination));
             shell_exec("ln -s '$source' -T '$destination'");
             $this->info('Linked: ' . substr($destination, strlen(base_path()) + 1), 'vv');
         } else {

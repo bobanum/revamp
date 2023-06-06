@@ -62,8 +62,12 @@ class Source {
                 $this->revampFiles($source, $destination);
                 continue;
             }
-            $this->makDirIfNotExist($this->revamp_path($prefix));
+            $destination = $this->revamp_path($prefix . $destination);
+            $destination = str_replace('\\', '/', $destination);
             if (is_array($source)) {
+                if (isset($source[2])) {
+                    $process_destination = $source[2];
+                }
                 $source = call_user_func($source[1], $source[0]);
             } else {
                 $source = base_path($source);
@@ -71,16 +75,26 @@ class Source {
             $paths = glob($source);
             foreach ($paths as $path) {
                 $path = str_replace('\\', '/', $path);
+                //TODO: check if it's a directory
                 if (is_dir($path)) {
                     $this->revampSubfolders($path, $destination);
                     continue;
                 }
                 $patternSource = '#^'.str_replace('*', '(.+)', $source).'$#i';
                 $patternSource = str_replace('\\', '/', $patternSource);
-                $destination = $this->revamp_path($prefix . $destination);
-                $destination = str_replace('\\', '/', $destination);
-                $destination = preg_replace($patternSource, $destination, $path);
-                $this->linkFileIfNeeded($path, $destination);
+                if (empty($process_destination)) {
+                    $link = preg_replace($patternSource, $destination, $path);
+                } else {
+                    $link = preg_replace_callback($patternSource, function ($matches) use ($process_destination, $destination) {
+                        array_shift($matches);
+                        $process_destination($matches);
+                        $placeholders = array_map(function ($index) {
+                            return '$' . ($index + 1);
+                        }, array_keys($matches));
+                        return str_replace($placeholders, $matches, $destination);
+                    }, $path);
+                }
+                $this->linkFileIfNeeded($path, $link);
             }
         }
     }

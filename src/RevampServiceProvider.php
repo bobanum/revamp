@@ -41,8 +41,6 @@ class RevampServiceProvider extends ServiceProvider implements DeferrableProvide
             Console\RevampCommand::class,
             Console\RevampBackCommand::class,
             Console\RevampRefreshCommand::class,
-            Console\RevampExtraCommand::class,
-            Console\RevampTestCommand::class,
         ];
     }
 }
