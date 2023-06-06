@@ -5,7 +5,6 @@ namespace Bobanum\Revamp\Sources;
 use Illuminate\Support\Str;
 
 class RequestSource extends Source {
-    use \Bobanum\Revamp\FilesTrait;
 
     static public function source_file_path($pattern) {
         return app_path('Http/Requests/*' . $pattern . 'Request.php');

@@ -3,7 +3,6 @@
 namespace Bobanum\Revamp\Sources;
 
 class PolicySource extends Source {
-    use \Bobanum\Revamp\FilesTrait;
 
     static public function source_file_path($pattern) {
         return app_path('Policies/' . $pattern . 'Policy.php');

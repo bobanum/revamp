@@ -5,7 +5,6 @@ namespace Bobanum\Revamp\Sources;
 use Illuminate\Support\Str;
 
 class ViewSource extends Source {
-    use \Bobanum\Revamp\FilesTrait;
 
     static public function source_file_path($pattern) {
         $path = resource_path('views/' . Str::plural(Str::snake($pattern)));

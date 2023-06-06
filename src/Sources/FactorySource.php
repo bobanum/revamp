@@ -5,7 +5,6 @@ namespace Bobanum\Revamp\Sources;
 use Illuminate\Support\Str;
 
 class FactorySource extends Source {
-    use \Bobanum\Revamp\FilesTrait;
 
     static public function source_file_path($pattern) {
         return database_path('factories/' . $pattern . 'Factory.php');

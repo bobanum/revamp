@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 
 trait FilesTrait {
     public function revamp_path($path = "") {
+        
         $result = base_path(config('revamp.folder_name', 'concepts'));
         if ($path) {
             $result .= '/' . $path;
@@ -19,6 +20,10 @@ trait FilesTrait {
         }
     }
     public function linkFileIfNeeded($source, $destination) {
+        if (!file_exists($source)) {
+            $this->error('File not found: ' . $source);
+            return;
+        }
         if (!file_exists($destination)) {
             link($source, $destination);
             $this->info('Linked: ' . substr($destination, strlen(base_path()) + 1), 'vv');

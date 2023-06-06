@@ -3,7 +3,9 @@ namespace Bobanum\Revamp\Sources;
 
 abstract class Source {
     use \Illuminate\Console\Concerns\InteractsWithIO;
-    use \Bobanum\Revamp\FilesTrait;
+    use \Bobanum\Revamp\FilesTrait {
+        revamp_path as public trait_revamp_path;
+    }
     static $keepOriginalNames = false;
     public $concept;
 
@@ -16,8 +18,16 @@ abstract class Source {
         return [];
     }
 
+    public function revamp_path($file = "") {
+        $result = $this->trait_revamp_path($this->concept->name);
+        if ($file) {
+            $result .= '/' . $file;
+        }
+        return $result;
+    }
+
     public function link_path() {
-        return $this->concept->path($this->revamp_name());
+        return $this->revamp_path($this->revamp_name());
     }
     abstract static public function source_file_path($file);
     public function source_path() {

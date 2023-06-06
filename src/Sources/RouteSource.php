@@ -5,7 +5,6 @@ namespace Bobanum\Revamp\Sources;
 use Illuminate\Support\Str;
 
 class RouteSource extends Source {
-    use \Bobanum\Revamp\FilesTrait;
 
     static public function source_file_path($pattern) {
         $pattern = Str::snake($pattern);

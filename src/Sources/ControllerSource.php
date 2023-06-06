@@ -3,7 +3,6 @@
 namespace Bobanum\Revamp\Sources;
 
 class ControllerSource extends Source {
-    use \Bobanum\Revamp\FilesTrait;
 
     static public function discover() {
         // Get all the controllers

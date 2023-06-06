@@ -3,7 +3,6 @@
 namespace Bobanum\Revamp\Sources;
 
 class ModelSource extends Source {
-    use \Bobanum\Revamp\FilesTrait;
 
     static public function discover() {
         // Get all the models

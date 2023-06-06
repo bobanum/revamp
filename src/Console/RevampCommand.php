@@ -4,6 +4,7 @@ namespace Bobanum\Revamp\Console;
 
 use Bobanum\Revamp\Concept;
 use Illuminate\Console\Command;
+use Bobanum\Revamp\Sources\GlobalSource;
 
 class RevampCommand extends Command {
     use \Bobanum\Revamp\FilesTrait;
@@ -104,6 +105,9 @@ class RevampCommand extends Command {
         return Concept::getConcepts();
     }
     public function revampGlobal() {
+        $source = new GlobalSource();
+        $source->revamp();
+        return;
         // Link routes.php (api and web)
         $this->linkFileIfNeeded(base_path('routes/web.php'), $this->revamp_path('routes_web.php'));
         $this->linkFileIfNeeded(base_path('routes/api.php'), $this->revamp_path('routes_api.php'));
